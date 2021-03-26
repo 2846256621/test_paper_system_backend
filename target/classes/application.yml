@@ -1,0 +1,5 @@
+server:
+  port: 10055
+spring:
+  profiles:
+    active: dev #开发模式

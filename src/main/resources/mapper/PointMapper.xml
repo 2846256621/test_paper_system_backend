@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ydl.examantion.dao.PointMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ydl.examantion.model.Point">
+        <id column="id" property="id" />
+        <result column="subject_id" property="subjectId" />
+        <result column="name" property="name" />
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, subject_id, name,status
+    </sql>
+
+    <!--查询知识点 -->
+    <select id="selectPoint"  parameterType="com.ydl.examantion.vo.PointVo" resultType="com.ydl.examantion.vo.PointResVo">
+        select point.user_id as userId,point.id as pointId,point.name as pointName,s.name as subjectName,point.chapter
+        from knowledge_point point left join subject s on point.subject_id = s.id
+        <where>
+            <if test="pointReqVo.pointName != null and pointReqVo.pointName != ''">
+                and point.name like concat('%', #{pointReqVo.pointName}, '%')
+            </if>
+            <if test="pointReqVo.subjectId != null and pointReqVo.subjectId != ''">
+                and s.id = #{pointReqVo.subjectId}
+            </if>
+
+            and point.status = 0
+            and s.status = 0
+        </where>
+
+    </select>
+
+</mapper>

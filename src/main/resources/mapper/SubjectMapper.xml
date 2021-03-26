@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ydl.examantion.dao.SubjectMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ydl.examantion.model.Subject">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name
+    </sql>
+
+
+    <select id="selectSubjectInfo" resultType="com.ydl.examantion.vo.SubjectResponseVo">
+        select s.id as subjectId,s.name as subjectName,s.user_id as userId ,count(point.id) as pointCount,count(single.id) as choiceCount,
+        count(judge.id) as judgementCount,count(b.id) as blankCount,count(short.id) as shortAnswerCount
+        from subject s
+                 left join knowledge_point point on s.id = point.subject_id and point.status = 0
+                 left join single as single on  s.id =single.subject_id and single.status = 0
+                 left join judgement as  judge on s.id = judge.subject_id and judge.status = 0
+                 left join blank as b on s.id = b.subject_id and b.status = 0
+                 left join short_answer as short on s.id = short.subject_id and  short.status = 0
+        <where>
+            <if test="subjectVo.name != null and subjectVo.name != ''">
+                and s.name like concat('%', #{subjectVo.name}, '%')
+            </if>
+            and s.status = 0
+        </where>
+            group  by s.id,s.name
+    </select>
+
+</mapper>

@@ -1,8 +1,10 @@
 package com.ydl.examantion.service;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ydl.examantion.model.Blank;
+import com.ydl.examantion.vo.ProblemReqVo;
 
 /**
  * <p>
@@ -14,4 +16,5 @@ import com.ydl.examantion.model.Blank;
  */
 public interface BlankService extends IService<Blank> {
 
+    Page selectBlank(ProblemReqVo problemReqVo);
 }

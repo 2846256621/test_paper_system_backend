@@ -95,4 +95,6 @@ public class Single {
     private Integer userId;
 
     private Integer status;
+
+    private String problemType;
 }

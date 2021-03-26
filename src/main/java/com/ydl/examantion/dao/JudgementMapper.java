@@ -2,6 +2,7 @@ package com.ydl.examantion.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ydl.examantion.model.Judgement;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,5 +12,6 @@ import com.ydl.examantion.model.Judgement;
  * @author YDL
  * @since 2021-02-01
  */
+@Mapper
 public interface JudgementMapper extends BaseMapper<Judgement> {
 }

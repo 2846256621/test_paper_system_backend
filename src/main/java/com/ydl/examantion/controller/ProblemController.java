@@ -1,15 +1,14 @@
 package com.ydl.examantion.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.base.Joiner;
-import com.ydl.examantion.model.Single;
+import com.ydl.examantion.model.*;
+import com.ydl.examantion.service.*;
+import com.ydl.examantion.vo.ProblemReqVo;
 import com.ydl.examantion.vo.ProblemVo;
 import org.apache.commons.lang3.StringUtils;
 import com.ydl.examantion.response.ResponseResult;
-import com.ydl.examantion.service.BlankService;
-import com.ydl.examantion.service.MultipleService;
-import com.ydl.examantion.service.ShortAnswerService;
-import com.ydl.examantion.service.SingleService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +43,9 @@ public class ProblemController {
     @Autowired
     ShortAnswerService shortAnswerService;
 
+    @Autowired
+    JudgementService judgementService;
+
     /**
      * 增加题目
      * @param problemVo
@@ -61,19 +63,41 @@ public class ProblemController {
                 return ResponseResult.fail("四个选项皆不能为空");
             }
             Single single = new Single();
-            single.setAnswer(problemVo.getAnswer()).setPointId(Joiner.on(",").join(problemVo.getKnowledgePoints())).setSubjectId(problemVo.getSubject()).setDifficulty(problemVo.getDifficultyLevel()).setOptionA(problemVo.getChoiceOptionA()).setOptionB(problemVo.getChoiceOptionB()).setOptionC(problemVo.getChoiceOptionC()).setOptionD(problemVo.getChoiceOptionD()).setScore(problemVo.getScore()).setUserId(problemVo.getUserId());
+            single.setAnswer(problemVo.getAnswer()).setPointId(Joiner.on(",").join(problemVo.getKnowledgePoints())).setSubjectId(problemVo.getSubject()).setDifficulty(problemVo.getDifficultyLevel()).setOptionA(problemVo.getChoiceOptionA()).setOptionB(problemVo.getChoiceOptionB()).setSteam(problemVo.getProblemText()).setOptionC(problemVo.getChoiceOptionC()).setOptionD(problemVo.getChoiceOptionD()).setScore(problemVo.getScore()).setUserId(problemVo.getUserId());
             singleService.save(single);
         } else if(type.equals("blank")){
+            Blank blank = new Blank();
+            blank.setAnswer(problemVo.getAnswer()).setPointId(Joiner.on(",").join(problemVo.getKnowledgePoints())).setSubjectId(problemVo.getSubject()).setSteam(problemVo.getProblemText()).setDifficulty(problemVo.getDifficultyLevel()).setScore(problemVo.getScore()).setUserId(problemVo.getUserId());
+            blankService.save(blank);
 
         }else if(type.equals("judgement")){
-
+            Judgement judgement = new Judgement();
+            judgement.setAnswer(problemVo.getAnswer()).setPointId(Joiner.on(",").join(problemVo.getKnowledgePoints())).setSubjectId(problemVo.getSubject()).setDifficulty(problemVo.getDifficultyLevel()).setSteam(problemVo.getProblemText()).setScore(problemVo.getScore()).setUserId(problemVo.getUserId());
+            judgementService.save(judgement);
         }else if(type.equals("showAnswer")){
-
+            ShortAnswer shortAnswer = new ShortAnswer();
+            shortAnswer.setAnswer(problemVo.getAnswer()).setPointId(Joiner.on(",").join(problemVo.getKnowledgePoints())).setSubjectId(problemVo.getSubject()).setSteam(problemVo.getProblemText()).setDifficulty(problemVo.getDifficultyLevel()).setScore(problemVo.getScore()).setUserId(problemVo.getUserId());
+           shortAnswerService.save(shortAnswer);
         }else if(type.equals("multiple")){
-
+            if(StringUtils.isEmpty(problemVo.getMultipleOptionA())||StringUtils.isEmpty(problemVo.getMultipleOptionB())||StringUtils.isEmpty(problemVo.getMultipleOptionC())||StringUtils.isEmpty(problemVo.getMultipleOptionD())){
+                return ResponseResult.fail("A,B,C,D四个选项皆不能为空");
+            }
+            Multiple multiple = new Multiple();
+            multiple.setAnswer(problemVo.getAnswer()).setPointId(Joiner.on(",").join(problemVo.getKnowledgePoints())).setSubjectId(problemVo.getSubject()).setSteam(problemVo.getProblemText()).setDifficulty(problemVo.getDifficultyLevel()).setOptionA(problemVo.getMultipleOptionA()).setOptionB(problemVo.getMultipleOptionB()).setOptionC(problemVo.getMultipleOptionC()).setOptionD(problemVo.getMultipleOptionD()).setOptionE(problemVo.getMultipleOptionE()).setOptionF(problemVo.getMultipleOptionF()).setScore(problemVo.getScore()).setUserId(problemVo.getUserId());
+            multipleService.save(multiple);
         }
         return ResponseResult.success();
     }
+
+    @PostMapping(value = "/selectProblem")
+    public ResponseResult selectPoint(@RequestBody ProblemVo problemVo){
+        String type = problemVo.getProblemType();
+        ProblemReqVo problemReqVo = new ProblemReqVo();
+        problemReqVo.setSubjectId(problemVo.getSubject()).setDifficultyLevel(problemVo.getDifficultyLevel()).setPointId(Joiner.on(",").join(problemVo.getKnowledgePoints())).setProblemType(problemVo.getProblemType()).setScore(problemVo.getScore());
+        Page page = blankService.selectBlank(problemReqVo);
+        return ResponseResult.page(page);
+    }
+
 
     public ResponseResult validateData(ProblemVo problemVo) {
         String answer = problemVo.getAnswer();

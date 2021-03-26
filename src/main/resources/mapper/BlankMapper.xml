@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ydl.examantion.dao.BlankMapper">
+
+    <select id="selectBlank"  parameterType="com.ydl.examantion.vo.ProblemReqVo" resultType="com.ydl.examantion.vo.ProblemMappResVo">
+        select s.subject_id as subjectId,sbj.name as subjectName,steam,problem_type as problemType,difficulty as difficultyLevel,score,point_id
+        from (select subject_id,steam,problem_type,difficulty,score,point_id from blank,judgement,multiple,short_answer,single) s left join subject sbj on subject_id = sbj.id
+        <where>
+            <if test="problemReqVo.problemType != null and problemReqVo.problem != ''">
+                and s.problem_type = #{problemReqVo.problemType}
+            </if>
+            <if test="problemReqVo.subjectId != null and problemReqVo.subjectId != ''">
+                and s.subject_id = #{problemReqVo.subjectId}
+            </if>
+            <if test="problemReqVo.pointId != null and problemReqVo.pointId != ''">
+                and s.point_id = #{problemReqVo.pointId}
+            </if>
+            <if test="problemReqVo.difficultyLevel != null and problemReqVo.difficultyLevel != ''">
+                and s.difficulty = #{problemReqVo.difficultyLevel}
+            </if>
+            <if test="problemReqVo.score != null and problemReqVo.score != ''">
+                and s.score = #{problemReqVo.score}
+            </if>
+            and s.status = 0
+            and sbj.status = 0
+        </where>
+
+    </select>
 </mapper>

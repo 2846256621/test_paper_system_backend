@@ -1,8 +1,10 @@
 package com.ydl.examantion.service;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ydl.examantion.model.Judgement;
+import com.ydl.examantion.vo.ProblemVo;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.ydl.examantion.model.Judgement;
  * @since 2021-02-01
  */
 public interface JudgementService extends IService<Judgement> {
+    Page selectPoint(ProblemVo problemVo);
 }

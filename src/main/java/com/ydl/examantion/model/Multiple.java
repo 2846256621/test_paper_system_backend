@@ -72,7 +72,7 @@ public class Multiple {
     /**
      * 答案
      */
-    private Integer answer;
+    private String answer;
 
     /**
      * 难度系数
@@ -95,4 +95,6 @@ public class Multiple {
     private Integer userId;
 
     private Integer status;
+
+    private String problemType;
 }

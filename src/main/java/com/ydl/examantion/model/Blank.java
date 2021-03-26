@@ -57,7 +57,7 @@ public class Blank {
     /**
      * 答案
      */
-    private Integer answer;
+    private String answer;
 
     /**
      * 难度系数
@@ -81,4 +81,5 @@ public class Blank {
 
     private Integer status;
 
+    private String problemType;
 }

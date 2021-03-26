@@ -59,7 +59,7 @@ public class Judgement {
     /**
      * 答案
      */
-    private Integer answer;
+    private String answer;
 
     /**
      * 难度系数
@@ -82,4 +82,6 @@ public class Judgement {
     private Integer userId;
 
     private Integer status;
+
+    private String problemType;
 }

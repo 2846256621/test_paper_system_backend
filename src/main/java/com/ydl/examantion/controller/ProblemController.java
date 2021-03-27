@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 /**
@@ -93,7 +94,11 @@ public class ProblemController {
     public ResponseResult selectPoint(@RequestBody ProblemVo problemVo){
         String type = problemVo.getProblemType();
         ProblemReqVo problemReqVo = new ProblemReqVo();
-        problemReqVo.setSubjectId(problemVo.getSubject()).setDifficultyLevel(problemVo.getDifficultyLevel()).setPointId(Joiner.on(",").join(problemVo.getKnowledgePoints())).setProblemType(problemVo.getProblemType()).setScore(problemVo.getScore());
+        if(problemVo.getKnowledgePoints()==null){
+            problemReqVo.setSubjectId(problemVo.getSubject()).setDifficultyLevel(problemVo.getDifficultyLevel()).setProblemType(problemVo.getProblemType()).setScore(problemVo.getScore());
+        }else {
+            problemReqVo.setSubjectId(problemVo.getSubject()).setDifficultyLevel(problemVo.getDifficultyLevel()).setPointId(Joiner.on(",").join(problemVo.getKnowledgePoints())).setProblemType(problemVo.getProblemType()).setScore(problemVo.getScore());
+        }
         Page page = blankService.selectBlank(problemReqVo);
         return ResponseResult.page(page);
     }

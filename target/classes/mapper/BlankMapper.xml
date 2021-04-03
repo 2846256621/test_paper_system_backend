@@ -3,27 +3,30 @@
 <mapper namespace="com.ydl.examantion.dao.BlankMapper">
 
     <select id="selectBlank"  parameterType="com.ydl.examantion.vo.ProblemReqVo" resultType="com.ydl.examantion.vo.ProblemMappResVo">
-        select s.subject_id as subjectId,sbj.name as subjectName,s.user_id as userId,steam,problem_type as problemType,difficulty as difficultyLevel,score,point_id as  knowledgePoint
-        from (select subject_id,steam,problem_type,difficulty,score,point_id,user_id,status from blank union all select subject_id,steam,problem_type,difficulty,score,point_id,user_id,status from judgement union all select subject_id,steam,problem_type,difficulty,score,point_id,user_id,status from multiple union all select subject_id,steam,problem_type,difficulty,score,point_id,user_id,status from short_answer union all select subject_id,steam,problem_type,difficulty,score,point_id,user_id,status from single) s left join subject sbj on subject_id = sbj.id
-        <where>
-            <if test="problemReqVo.problemType != null and problemReqVo.problemType != ''">
-                and s.problem_type = #{problemReqVo.problemType}
-            </if>
-            <if test="problemReqVo.subjectId != null and problemReqVo.subjectId != ''">
-                and s.subject_id = #{problemReqVo.subjectId}
-            </if>
-            <if test="problemReqVo.pointId != null and problemReqVo.pointId != ''">
-                and s.point_id like concat('%', #{problemReqVo.pointId}, '%')
-            </if>
-            <if test="problemReqVo.difficultyLevel != null and problemReqVo.difficultyLevel != ''">
-                and s.difficulty = #{problemReqVo.difficultyLevel}
-            </if>
-            <if test="problemReqVo.score != null and problemReqVo.score != ''">
-                and s.score = #{problemReqVo.score}
-            </if>
-            and s.status = 0
-            and sbj.status = 0
-        </where>
+    select s.id as problemId,s.subject_id as subjectId,sbj.name as subjectName,s.user_id as userId,steam,problem_type as problemType,difficulty as difficultyLevel,score,point_id as  knowledgePoint
+    from (select id,subject_id,steam,problem_type,difficulty,score,point_id,user_id,status from blank union all select id,subject_id,steam,problem_type,difficulty,score,point_id,user_id,status from judgement union all select id,subject_id,steam,problem_type,difficulty,score,point_id,user_id,status from multiple union all select id,subject_id,steam,problem_type,difficulty,score,point_id,user_id,status from short_answer union all select id,subject_id,steam,problem_type,difficulty,score,point_id,user_id,status from single) s left join subject sbj on subject_id = sbj.id
+    <where>
+        <if test="problemReqVo.problemType != null and problemReqVo.problemType != ''">
+            and s.problem_type = #{problemReqVo.problemType}
+        </if>
+        <if test="problemReqVo.subjectId != null and problemReqVo.subjectId != ''">
+            and s.subject_id = #{problemReqVo.subjectId}
+        </if>
+        <if test="problemReqVo.pointId != null and problemReqVo.pointId != ''">
+            and s.point_id like concat('%', #{problemReqVo.pointId}, '%')
+        </if>
+        <if test="problemReqVo.difficultyLevel != null and problemReqVo.difficultyLevel != ''">
+            and s.difficulty = #{problemReqVo.difficultyLevel}
+        </if>
+        <if test="problemReqVo.score != null and problemReqVo.score != ''">
+            and s.score = #{problemReqVo.score}
+        </if>
+        and s.status = 0
+        and sbj.status = 0
+    </where>
+    </select>
 
+    <select id="viewById" parameterType="com.ydl.examantion.vo.ProblemVo" resultType="com.ydl.examantion.vo.ProblemResVo">
+        select problem_type as problemType,subject_id as subject,difficulty as difficultyLevel,point_id as knowledgePoint,steam as problemText,answer,score from blank where id = #{problemVo.problemId}
     </select>
 </mapper>

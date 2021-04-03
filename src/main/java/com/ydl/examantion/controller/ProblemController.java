@@ -6,6 +6,7 @@ import com.google.common.base.Joiner;
 import com.ydl.examantion.model.*;
 import com.ydl.examantion.service.*;
 import com.ydl.examantion.vo.ProblemReqVo;
+import com.ydl.examantion.vo.ProblemResVo;
 import com.ydl.examantion.vo.ProblemVo;
 import org.apache.commons.lang3.StringUtils;
 import com.ydl.examantion.response.ResponseResult;
@@ -75,7 +76,7 @@ public class ProblemController {
             Judgement judgement = new Judgement();
             judgement.setAnswer(problemVo.getAnswer()).setPointId(Joiner.on(",").join(problemVo.getKnowledgePoints())).setSubjectId(problemVo.getSubject()).setDifficulty(problemVo.getDifficultyLevel()).setSteam(problemVo.getProblemText()).setScore(problemVo.getScore()).setUserId(problemVo.getUserId());
             judgementService.save(judgement);
-        }else if(type.equals("showAnswer")){
+        }else if(type.equals("shortAnswer")){
             ShortAnswer shortAnswer = new ShortAnswer();
             shortAnswer.setAnswer(problemVo.getAnswer()).setPointId(Joiner.on(",").join(problemVo.getKnowledgePoints())).setSubjectId(problemVo.getSubject()).setSteam(problemVo.getProblemText()).setDifficulty(problemVo.getDifficultyLevel()).setScore(problemVo.getScore()).setUserId(problemVo.getUserId());
            shortAnswerService.save(shortAnswer);
@@ -92,15 +93,32 @@ public class ProblemController {
 
     @PostMapping(value = "/selectProblem")
     public ResponseResult selectPoint(@RequestBody ProblemVo problemVo){
-        String type = problemVo.getProblemType();
         ProblemReqVo problemReqVo = new ProblemReqVo();
         if(problemVo.getKnowledgePoints()==null){
             problemReqVo.setSubjectId(problemVo.getSubject()).setDifficultyLevel(problemVo.getDifficultyLevel()).setProblemType(problemVo.getProblemType()).setScore(problemVo.getScore());
         }else {
             problemReqVo.setSubjectId(problemVo.getSubject()).setDifficultyLevel(problemVo.getDifficultyLevel()).setPointId(Joiner.on(",").join(problemVo.getKnowledgePoints())).setProblemType(problemVo.getProblemType()).setScore(problemVo.getScore());
         }
-        Page page = blankService.selectBlank(problemReqVo);
+        Page page = blankService.selectProblem(problemReqVo);
         return ResponseResult.page(page);
+    }
+
+    @PostMapping(value = "/viewProblem")
+    public ResponseResult viewProblem(@RequestBody ProblemVo problemVo){
+        String type = problemVo.getProblemType();
+        ProblemResVo problemResVo = new ProblemResVo();
+        if(type.equals("choice")){
+            problemResVo = singleService.viewById(problemVo);
+        } else if(type.equals("blank")){
+            problemResVo = blankService.viewById(problemVo);
+        }else if(type.equals("judgement")){
+            problemResVo = judgementService.viewById(problemVo);
+        }else if(type.equals("shortAnswer")){
+            problemResVo = shortAnswerService.viewById(problemVo);
+        }else if(type.equals("multiple")){
+            problemResVo = multipleService.viewById(problemVo);
+        }
+        return ResponseResult.data(problemResVo);
     }
 
 

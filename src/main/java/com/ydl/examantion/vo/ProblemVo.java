@@ -7,6 +7,9 @@ import java.util.ArrayList;
 
 @Data
 public class ProblemVo implements Serializable {
+
+    private Integer problemId;
+
     private String answer;
 
     private String choiceOptionA;

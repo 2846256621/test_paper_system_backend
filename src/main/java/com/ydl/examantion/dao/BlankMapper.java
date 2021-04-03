@@ -24,4 +24,6 @@ import java.util.List;
 public interface BlankMapper extends BaseMapper<Blank> {
 
     List<ProblemMappResVo> selectBlank(@Param("problemReqVo") ProblemReqVo problemReqVo, Page page);
+
+    ProblemResVo viewById(@Param("problemVo") ProblemVo problemVo);
 }

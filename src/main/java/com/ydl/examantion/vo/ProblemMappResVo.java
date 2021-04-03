@@ -7,6 +7,7 @@ import java.util.ArrayList;
 @Data
 public class ProblemMappResVo {
 
+    private Integer problemId;
     private Integer subjectId;
     private String subjectName;
 

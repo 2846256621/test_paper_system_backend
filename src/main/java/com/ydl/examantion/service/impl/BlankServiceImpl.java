@@ -27,12 +27,10 @@ public class BlankServiceImpl extends ServiceImpl<BlankMapper, Blank> implements
     PointMapper pointMapper;
 
     @Override
-    public Page selectBlank(ProblemReqVo problemReqVo) {
+    public Page selectProblem(ProblemReqVo problemReqVo) {
         Page page = new Page(problemReqVo.getCurrentPage(), problemReqVo.getPageSize());
         List<ProblemMappResVo> dataList = blankMapper.selectBlank(problemReqVo, page);
-//        ArrayList<ProblemResVo> problemResVos = new ArrayList<ProblemResVo>();
         for(int i=0;i<dataList.size();i++){
-//            ProblemResVo problemResVo = new ProblemResVo();
             String pointIds = dataList.get(i).getKnowledgePoint();
             List<Integer> pointLs = Arrays.asList(pointIds.split(",")).stream().map(s -> Integer.parseInt(s.trim())).collect(Collectors.toList());
             ArrayList<String> pointNames = new ArrayList<String>();
@@ -43,5 +41,13 @@ public class BlankServiceImpl extends ServiceImpl<BlankMapper, Blank> implements
         }
         page.setRecords(dataList);
         return page;
+    }
+
+    @Override
+    public ProblemResVo viewById(ProblemVo problemVo) {
+        ProblemResVo problemResVo = blankMapper.viewById(problemVo);
+        String pointIds = problemResVo.getKnowledgePoint();
+        problemResVo.setKnowledgePoints(Arrays.asList(pointIds.split(",")).stream().map(s -> Integer.parseInt(s.trim())).collect(Collectors.toList()));
+        return problemResVo;
     }
 }

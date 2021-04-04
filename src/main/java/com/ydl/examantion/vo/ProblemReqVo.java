@@ -11,6 +11,8 @@ public class ProblemReqVo {
 
     private String problemType;
 
+    private String problemText;
+
     private Double difficultyLevel;
 
     private String PointId;

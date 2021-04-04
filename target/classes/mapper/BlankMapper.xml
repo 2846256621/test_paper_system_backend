@@ -21,6 +21,9 @@
         <if test="problemReqVo.score != null and problemReqVo.score != ''">
             and s.score = #{problemReqVo.score}
         </if>
+        <if test="problemReqVo.problemText != null and problemReqVo.problemText != ''">
+            and s.steam like concat('%', #{problemReqVo.problemText}, '%')
+        </if>
         and s.status = 0
         and sbj.status = 0
     </where>

@@ -77,7 +77,6 @@ public class PointController {
         po.setName(pointVo.getPointName());
         po.setUserId(pointVo.getUserId());
         po.setChapter(pointVo.getChapter());
-
         boolean saveStatus = pointService.saveOrUpdate(po);
         if(saveStatus){
             return ResponseResult.success();

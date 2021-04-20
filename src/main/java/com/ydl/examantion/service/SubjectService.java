@@ -19,4 +19,6 @@ import java.util.List;
 public interface SubjectService extends IService<Subject> {
 
     Page selectSubjectInfo(SubjectVo subjectVo);
+
+    Subject getBySubjectId(Integer subjectId);
 }

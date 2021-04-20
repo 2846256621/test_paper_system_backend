@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ydl.examantion.dao.PaperMapper">
+
+    <insert id="saveExam"  parameterType="com.ydl.examantion.model.Exam" useGeneratedKeys="true" keyProperty="id" >
+        insert into exam(subject_id,point_id,user_id,exam_name,problem_num,difficulty,point_coverage,fitness,score,start_time,end_time)
+        values(#{exam.subjectId},#{exam.pointId},#{exam.userId},#{exam.examName},#{exam.problemNum},#{exam.difficulty},#{exam.pointCoverage},#{exam.fitness},#{exam.score},#{exam.startTime},#{exam.endTime})
+    </insert>
+    <insert id="saveRelation" parameterType="com.ydl.examantion.model.ExamQuestion">
+        insert into exam_question(exam_id,question_type,question_id)
+        values(#{examQuestion.examId},#{examQuestion.questionType},#{examQuestion.questionId})
+    </insert>
+    <select id="getByExamId" resultType="com.ydl.examantion.model.ExamQuestion">
+        select * from exam_question where exam_id = #{examQuestion.examId}
+    </select>
+</mapper>

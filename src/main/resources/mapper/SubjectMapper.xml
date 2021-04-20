@@ -31,5 +31,8 @@
             and s.status = 0
         </where>
     </select>
+    <select id="viewById" resultType="com.ydl.examantion.model.Subject">
+        select * from subject where id = #{subjectId}
+    </select>
 
 </mapper>

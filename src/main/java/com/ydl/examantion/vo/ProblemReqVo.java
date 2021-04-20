@@ -15,7 +15,7 @@ public class ProblemReqVo {
 
     private Double difficultyLevel;
 
-    private String PointId;
+    private String pointId;
 
     private Integer score;
 

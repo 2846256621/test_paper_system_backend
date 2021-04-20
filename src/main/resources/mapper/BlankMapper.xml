@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ydl.examantion.dao.BlankMapper">
 
-    <select id="selectBlank"  parameterType="com.ydl.examantion.vo.ProblemReqVo" resultType="com.ydl.examantion.vo.ProblemMappResVo">
+    <select id="selectProblem" parameterType="com.ydl.examantion.vo.ProblemReqVo" resultType="com.ydl.examantion.vo.ProblemMappResVo">
     select s.id as problemId,s.subject_id as subjectId,sbj.name as subjectName,s.user_id as userId,steam,problem_type as problemType,difficulty as difficultyLevel,score,point_id as  knowledgePoint
     from (select id,subject_id,steam,problem_type,difficulty,score,point_id,user_id,status from blank union all select id,subject_id,steam,problem_type,difficulty,score,point_id,user_id,status from judgement union all select id,subject_id,steam,problem_type,difficulty,score,point_id,user_id,status from multiple union all select id,subject_id,steam,problem_type,difficulty,score,point_id,user_id,status from short_answer union all select id,subject_id,steam,problem_type,difficulty,score,point_id,user_id,status from single) s left join subject sbj on subject_id = sbj.id
     <where>

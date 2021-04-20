@@ -14,7 +14,9 @@ import java.util.List;
 @Mapper
 public interface SubjectMapper extends BaseMapper<Subject> {
 
-    int addSubject(Subject subject);
+//    int addSubject(Subject subject);
 
     List<SubjectResponseVo> selectSubjectInfo(@Param("subjectVo") SubjectVo subjectVo, Page page);
+
+    Subject viewById(@Param("subjectId") Integer subjectId);
 }

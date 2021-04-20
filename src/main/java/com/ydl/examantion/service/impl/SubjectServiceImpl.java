@@ -33,4 +33,9 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
         page.setRecords(responseVos);
         return page;
     }
+
+    @Override
+    public Subject getBySubjectId(Integer subjectId) {
+        return subjectMapper.viewById(subjectId);
+    }
 }

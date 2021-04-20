@@ -23,7 +23,7 @@ import java.util.List;
 @Mapper
 public interface BlankMapper extends BaseMapper<Blank> {
 
-    List<ProblemMappResVo> selectBlank(@Param("problemReqVo") ProblemReqVo problemReqVo, Page page);
+    List<ProblemMappResVo> selectProblem(@Param("problemReqVo") ProblemReqVo problemReqVo, Page page);
 
     ProblemResVo viewById(@Param("problemVo") ProblemVo problemVo);
 }

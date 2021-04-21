@@ -38,6 +38,12 @@ public class PaperController {
     @Autowired
     SubjectService subjectService;
 
+
+    /**
+     * 组卷
+     * @param paperVo
+     * @return
+     */
     @PostMapping(value = "/makePaper")
     public ResponseResult makePaper(@RequestBody PaperVo paperVo){
         Integer problemNum = 0;
@@ -53,11 +59,16 @@ public class PaperController {
         List<Question> questions = paper.getQuestions();
         Exam exam = new Exam().setExamName(paperVo.getExamName()).setSubjectId(paperVo.getSubjectId()).setUserId(paperVo.getUserId()).setDifficulty(paper.getDifficulty()).setFitness(paper.getFitness()).setPointCoverage(paper.getKpCoverage()).setPointId(Joiner.on(",").join(paperVo.getPoints())).setProblemNum(problemNum).setScore(paper.getTotalScore()).setStartTime(paperVo.getStartTime()).setEndTime(paperVo.getEndTime());
         paperService.saveExam(exam);
-        paperService.saveRelation(exam,questions);
+        paperService.saveRelation(exam,questions,typeScoreMapping);
 
         return ResponseResult.data(exam.getId());
     }
 
+    /**
+     * 试卷详情
+     * @param examId
+     * @return
+     */
     @GetMapping(value = "/paperDetails")
     public ResponseResult paperDetails(@RequestParam("examId") Integer examId){
         Exam exam = paperService.getById(examId);
@@ -69,5 +80,10 @@ public class PaperController {
         PaperResVo paperResVo = new PaperResVo().setPaperAttribute(paperAttribute).setPaperDetails(paperDetails).setProblemList(problemList);
 
         return ResponseResult.data(paperResVo);
+    }
+
+    @PostMapping(value = "/paperList")
+    public ResponseResult paperList(@RequestBody ){
+
     }
 }

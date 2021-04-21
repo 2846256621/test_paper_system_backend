@@ -70,6 +70,4 @@ public class Population {
 			 population[index] = temp;
 		}
 	}
-
-
 }

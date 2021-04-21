@@ -45,33 +45,34 @@ public class GeneticAlgorithm {
               individual = new Individual();
               individual.setId(i+1);
               individual.setTotalScore(0);
-              while(paper.getTotalScore()!=individual.getTotalScore()) {
+//              while(paper.getTotalScore()!=individual.getTotalScore()) {
                   individual.setQuestions(new ArrayList<Question>());
                   for(String type : typeCountMapping.keySet()) {
                       int count = typeCountMapping.get(type);
                       List<Question> oneTypeQuestion = this.getAppointedQuestionList(qList, type, paper.getKnowledgePoints());
                       int totalScore = 0;
                       List<Question> oneTypeQuestionList = null;
-                      do {
-                          oneTypeQuestionList = new ArrayList<Question>();
-                          totalScore = 0;
-                          Question temp = new Question();
-                          for(int k=0; k<count; k++) {
-                              int otpCount = oneTypeQuestion.size();
-                              int index = rand.nextInt(otpCount-k);
-                              Question problemAtIndex = oneTypeQuestion.get(index);
-                              oneTypeQuestionList.add(problemAtIndex);
-                              totalScore+=problemAtIndex.getScore();
-
-                              temp = oneTypeQuestion.get(otpCount-1-k);
-                              oneTypeQuestion.set(otpCount-1-k, problemAtIndex);
-                              oneTypeQuestion.set(index, temp);
-                          }
-                      }while(totalScore!=paper.getTypeScoreMapping().get(type));
+//                      do {
+                      oneTypeQuestionList = new ArrayList<Question>();
+                      totalScore = 0;
+                      Question temp = new Question();
+                      for(int k=0; k<count; k++) {
+                          int otpCount = oneTypeQuestion.size();
+                          int index = rand.nextInt(otpCount-k);
+                          Question problemAtIndex = oneTypeQuestion.get(index);
+                          oneTypeQuestionList.add(problemAtIndex);
+                          totalScore+=(paper.getTypeScoreMapping()).get(problemAtIndex.getType());
+                          temp = oneTypeQuestion.get(otpCount-1-k);
+                          oneTypeQuestion.set(otpCount-1-k, problemAtIndex);
+                          oneTypeQuestion.set(index, temp);
+                      }
+//                      }while(totalScore!=paper.getTypeScoreMapping().get(type));
                       List<Question> questions = individual.getQuestions();
                       questions.addAll(oneTypeQuestionList);
                       individual.setQuestions(questions);
-                  }
+                      individual.setTotalScore(paper.getTotalScore());
+//                      System.out.println("循环出不来");
+//                  }
               }
               population.setInividual(i, individual);
           }
@@ -221,8 +222,4 @@ public class GeneticAlgorithm {
           }
           return subList;
       }
-
-
-
-
   }

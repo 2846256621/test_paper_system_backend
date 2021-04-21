@@ -22,7 +22,7 @@ public class Paper {
 		int totalScore = 0;
 		Set<String> keySet= typeScoreMapping.keySet();
 		for(String key:keySet){
-			totalScore += typeScoreMapping.get(key);
+			totalScore += typeScoreMapping.get(key)*typeCountMapping.get(key);
 		}
 		return totalScore;
 	}

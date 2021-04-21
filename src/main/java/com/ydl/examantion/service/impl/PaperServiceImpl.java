@@ -8,8 +8,6 @@ import com.ydl.examantion.algorithm.Question;
 import com.ydl.examantion.dao.*;
 import com.ydl.examantion.model.Exam;
 import com.ydl.examantion.model.ExamQuestion;
-import com.ydl.examantion.model.Judgement;
-import com.ydl.examantion.model.ShortAnswer;
 import com.ydl.examantion.service.PaperService;
 import com.ydl.examantion.vo.ProblemResVo;
 import com.ydl.examantion.vo.ProblemVo;
@@ -59,9 +57,9 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper,Exam> implements P
     }
 
     @Override
-    public boolean saveRelation(Exam exam, List<Question> questions) {
+    public boolean saveRelation(Exam exam, List<Question> questions,Map<String,Integer> typeScoreMapping) {
         for (Question q:questions) {
-            ExamQuestion examQuestion = new ExamQuestion().setExamId(exam.getId()).setQuestionId(q.getId()).setQuestionType(q.getType());
+            ExamQuestion examQuestion = new ExamQuestion().setExamId(exam.getId()).setQuestionId(q.getId()).setQuestionType(q.getType()).setQuestionScore(typeScoreMapping.get(q.getType()));
             System.out.println(exam.getId());
             paperMapper.saveRelation(examQuestion);
         }
@@ -87,6 +85,7 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper,Exam> implements P
             }else if(type.equals("multiple")){
                 problemResVo = multipleMapper.viewById(problemVo);
             }
+            problemResVo.setScore(q.getQuestionScore());
             problemResVos.add(problemResVo);
         }
         return problemResVos;

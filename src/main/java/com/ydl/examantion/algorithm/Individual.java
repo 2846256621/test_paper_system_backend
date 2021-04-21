@@ -37,18 +37,11 @@ public class Individual {
 		for(Question q:questions) {
 			diff += q.getDifficulty()*q.getScore();
 		}
-		return diff/this.getTotalScore();
+		return diff/this.totalScore;
 	}
 
 	public int getTotalScore() {
-		int sum = 0;
-		if(this.questions!=null) {
-			for(Question q:questions) {
-				sum += q.getScore();
-			}
-		}
-		
-		return sum;
+		return totalScore;
 	}
 	
 	public double getKpCoverage() {
@@ -86,7 +79,7 @@ public class Individual {
 		sb.append("个体id:" + id 
 				+ "难度：" + this.getDifficulty() 
 				+ "适应度：" + fitness 
-				+ "总分：" + this.getTotalScore() 
+				+ "总分：" + this.totalScore
 				+ "总题数：" + this.getQuestionCount() 
 				+ "知识点覆盖度：" + kpCoverage
 				+ getTypeScoreMapping());

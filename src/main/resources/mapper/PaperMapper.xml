@@ -7,8 +7,8 @@
         values(#{exam.subjectId},#{exam.pointId},#{exam.userId},#{exam.examName},#{exam.problemNum},#{exam.difficulty},#{exam.pointCoverage},#{exam.fitness},#{exam.score},#{exam.startTime},#{exam.endTime})
     </insert>
     <insert id="saveRelation" parameterType="com.ydl.examantion.model.ExamQuestion">
-        insert into exam_question(exam_id,question_type,question_id)
-        values(#{examQuestion.examId},#{examQuestion.questionType},#{examQuestion.questionId})
+        insert into exam_question(exam_id,question_type,question_id,question_score)
+        values(#{examQuestion.examId},#{examQuestion.questionType},#{examQuestion.questionId},#{examQuestion.questionScore})
     </insert>
     <select id="getByExamId" resultType="com.ydl.examantion.model.ExamQuestion">
         select * from exam_question where exam_id = #{examQuestion.examId}

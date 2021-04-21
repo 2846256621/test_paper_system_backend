@@ -18,7 +18,7 @@ public interface PaperService extends IService<Exam> {
 
     Integer saveExam(Exam exam);
 
-    boolean saveRelation(Exam exam,List<Question> questions);
+    boolean saveRelation(Exam exam,List<Question> questions,Map<String,Integer> typeScoreMapping);
 
     ArrayList<ProblemResVo> getProblemList(List<ExamQuestion> questions);
 

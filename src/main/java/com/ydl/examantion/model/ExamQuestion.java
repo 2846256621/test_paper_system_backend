@@ -18,4 +18,6 @@ public class ExamQuestion {
     private String questionType;
 
     private Integer questionId;
+
+    private Integer questionScore;
 }

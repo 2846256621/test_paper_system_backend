@@ -1,5 +1,6 @@
 package com.ydl.examantion.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ydl.examantion.algorithm.Individual;
 import com.ydl.examantion.algorithm.Paper;
@@ -8,15 +9,18 @@ import com.ydl.examantion.algorithm.Question;
 import com.ydl.examantion.dao.*;
 import com.ydl.examantion.model.Exam;
 import com.ydl.examantion.model.ExamQuestion;
+import com.ydl.examantion.model.Point;
+import com.ydl.examantion.model.Subject;
 import com.ydl.examantion.service.PaperService;
-import com.ydl.examantion.vo.ProblemResVo;
-import com.ydl.examantion.vo.ProblemVo;
+import com.ydl.examantion.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -24,6 +28,9 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper,Exam> implements P
 
     @Autowired
     BlankMapper blankMapper;
+
+    @Autowired
+    SubjectMapper subjectMapper;
 
     @Autowired
     SingleMapper singleMapper;
@@ -39,6 +46,9 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper,Exam> implements P
 
     @Autowired
     PaperMapper paperMapper;
+
+    @Autowired
+    PointMapper pointMapper;
 
     @Override
     public Individual makePaper(Integer subject, List<Integer> kpList, Double diff, Map<String, Integer> typeCountMapping, Map<String, Integer> typeScoreMapping,List<Question> qList) {
@@ -94,5 +104,24 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper,Exam> implements P
     @Override
     public List<ExamQuestion> getByExamId(Integer id) {
         return paperMapper.getByExamId(id);
+    }
+
+
+    @Override
+    public Page selectPaperList(PaperListVo paperListVo) {
+        Page page = new Page(paperListVo.getCurrentPage(), paperListVo.getPageSize());
+        ArrayList<PaperListRes> paperListRes1 = paperMapper.selectPaperList(paperListVo);
+        Subject subject = new Subject();
+        for (PaperListRes p: paperListRes1) {
+            subject = subjectMapper.viewById(p.getSubjectId());
+            p.setSubject(subject.getName());
+            List<Integer> pointLs = Arrays.asList(p.getKnowledge().split(",")).stream().map(s -> Integer.parseInt(s.trim())).collect(Collectors.toList());
+            ArrayList<String> pointNames = new ArrayList<String>();
+            for (Integer pointId:pointLs) {
+                pointNames.add(pointMapper.selectById(pointId).getName());
+            }
+            p.setKnowledgePoints(pointNames);
+        }
+        return page.setRecords(paperListRes1);
     }
 }

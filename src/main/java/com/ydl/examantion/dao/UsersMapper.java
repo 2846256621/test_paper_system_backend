@@ -27,4 +27,6 @@ public interface UsersMapper extends BaseMapper<Users> {
 
     public Users selectUserLogin(UserRegisterVo registerVo);
 
+    Integer usersStatistic();
+
 }

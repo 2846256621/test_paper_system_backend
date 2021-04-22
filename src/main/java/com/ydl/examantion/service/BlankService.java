@@ -20,7 +20,7 @@ import java.util.List;
  * @author YDL
  * @since 2021-02-01
  */
-public interface BlankService extends IService<Blank> {
+public interface  BlankService extends IService<Blank> {
 
     Page selectProblem(ProblemReqVo problemReqVo);
 

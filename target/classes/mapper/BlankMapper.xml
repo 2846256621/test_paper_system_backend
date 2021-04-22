@@ -32,4 +32,9 @@
     <select id="viewById" parameterType="com.ydl.examantion.vo.ProblemVo" resultType="com.ydl.examantion.vo.ProblemResVo">
         select problem_type as problemType,subject_id as subject,difficulty as difficultyLevel,point_id as knowledgePoint,steam as problemText,answer,score from blank where id = #{problemVo.problemId}
     </select>
+    <select id="questionStatistic" resultType="java.lang.Integer">
+        select count(id)
+        from (select id,status from blank union all select id,status from judgement union all select id,status from multiple union all select id,status from short_answer union all select id,status from single) s
+        where s.status = 0
+    </select>
 </mapper>

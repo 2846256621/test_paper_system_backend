@@ -22,4 +22,6 @@ import java.util.List;
 public interface PointMapper extends BaseMapper<Point> {
 
     List<PointResVo> selectPoint(@Param("pointReqVo") PointVo pointReqVo, Page page);
+
+    Integer pointStatistic();
 }

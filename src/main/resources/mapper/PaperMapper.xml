@@ -13,4 +13,19 @@
     <select id="getByExamId" resultType="com.ydl.examantion.model.ExamQuestion">
         select * from exam_question where exam_id = #{examQuestion.examId}
     </select>
+    <select id="selectPaperList" resultType="com.ydl.examantion.vo.PaperListRes">
+        select id as id,exam_name as testPaperName,subject_id as subjectId,start_time as startTime,end_time as endTime,score as score,difficulty,point_id as knowledge,user_id as userId from exam
+        <where>
+            <if test="paperListVo.subjectId != null and paperListVo.subjectId != ''">
+                and exam.subject_id = #{paperListVo.subjectId}
+            </if>
+            <if test="paperListVo.examName != null and paperListVo.examName != ''">
+                and exam.exam_name = #{paperListVo.examName}
+            </if>
+            and exam.status = 0
+        </where>
+    </select>
+    <select id="paperStatistic" resultType="java.lang.Integer">
+        select count(*) from exam where status = 0
+    </select>
 </mapper>

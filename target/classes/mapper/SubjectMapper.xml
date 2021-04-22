@@ -34,5 +34,8 @@
     <select id="viewById" resultType="com.ydl.examantion.model.Subject">
         select * from subject where id = #{subjectId}
     </select>
+    <select id="subjectStatistic" resultType="java.lang.Integer">
+        select count(*) from subject where status = 0
+    </select>
 
 </mapper>

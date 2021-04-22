@@ -34,4 +34,7 @@
     <select id="selectUserLogin" parameterType="com.ydl.examantion.vo.UserRegisterVo" resultType="com.ydl.examantion.model.Users">
         select id,user_name as userName,type,last_log_time as lastLogTime,status from users where user_name = #{userName} and pass_word= #{passWord}
     </select>
+    <select id="usersStatistic" resultType="java.lang.Integer">
+        select count(*) from users where status = 0;
+    </select>
 </mapper>

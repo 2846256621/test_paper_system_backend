@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 @Data
 public class PaperVo {
+
+    private Integer examId;
     private Double difficulty;
 
     private String endTime;

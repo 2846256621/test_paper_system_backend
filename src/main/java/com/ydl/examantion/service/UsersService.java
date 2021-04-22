@@ -24,4 +24,6 @@ public interface UsersService extends IService<Users> {
     public ResponseResult registerUser(Users users);
 
     public ResponseResult selectUserLogin(UserRegisterVo registerVo);
+
+    boolean isJurisdiction(Integer userId);
 }

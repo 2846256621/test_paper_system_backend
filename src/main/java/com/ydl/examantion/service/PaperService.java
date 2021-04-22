@@ -1,11 +1,15 @@
 package com.ydl.examantion.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ydl.examantion.algorithm.Individual;
 import com.ydl.examantion.algorithm.Paper;
 import com.ydl.examantion.algorithm.Question;
 import com.ydl.examantion.model.Exam;
 import com.ydl.examantion.model.ExamQuestion;
+import com.ydl.examantion.vo.PaperListRes;
+import com.ydl.examantion.vo.PaperListVo;
+import com.ydl.examantion.vo.PaperVo;
 import com.ydl.examantion.vo.ProblemResVo;
 
 import java.util.ArrayList;
@@ -23,4 +27,6 @@ public interface PaperService extends IService<Exam> {
     ArrayList<ProblemResVo> getProblemList(List<ExamQuestion> questions);
 
     List<ExamQuestion> getByExamId(Integer id);
+
+    Page selectPaperList(PaperListVo paperListVo);
 }

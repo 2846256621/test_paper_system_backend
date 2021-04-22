@@ -32,5 +32,8 @@
         </where>
 
     </select>
+    <select id="pointStatistic" resultType="java.lang.Integer">
+        select count(*) from knowledge_point where status = 0
+    </select>
 
 </mapper>

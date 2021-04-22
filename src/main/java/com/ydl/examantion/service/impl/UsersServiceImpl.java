@@ -62,4 +62,18 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
         }
         return ResponseResult.data(userLogin);
     }
+
+    /**
+     * 判断是否有管理员权限
+     * @param userId
+     * @return
+     */
+    @Override
+    public boolean isJurisdiction(Integer userId) {
+        Users user = usersMapper.selectById(userId);
+        if(user.getType() == 1){
+            return true;
+        }
+        return false;
+    }
 }

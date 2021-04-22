@@ -19,4 +19,6 @@ public interface SubjectMapper extends BaseMapper<Subject> {
     List<SubjectResponseVo> selectSubjectInfo(@Param("subjectVo") SubjectVo subjectVo, Page page);
 
     Subject viewById(@Param("subjectId") Integer subjectId);
+
+    Integer subjectStatistic();
 }

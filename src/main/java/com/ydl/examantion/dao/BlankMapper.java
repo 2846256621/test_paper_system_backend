@@ -26,4 +26,6 @@ public interface BlankMapper extends BaseMapper<Blank> {
     List<ProblemMappResVo> selectProblem(@Param("problemReqVo") ProblemReqVo problemReqVo, Page page);
 
     ProblemResVo viewById(@Param("problemVo") ProblemVo problemVo);
+
+    Integer questionStatistic();
 }

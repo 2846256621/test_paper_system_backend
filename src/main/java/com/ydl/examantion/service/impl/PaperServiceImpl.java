@@ -110,7 +110,7 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper,Exam> implements P
     @Override
     public Page selectPaperList(PaperListVo paperListVo) {
         Page page = new Page(paperListVo.getCurrentPage(), paperListVo.getPageSize());
-        ArrayList<PaperListRes> paperListRes1 = paperMapper.selectPaperList(paperListVo);
+        ArrayList<PaperListRes> paperListRes1 = paperMapper.selectPaperList(paperListVo,page);
         Subject subject = new Subject();
         for (PaperListRes p: paperListRes1) {
             subject = subjectMapper.viewById(p.getSubjectId());

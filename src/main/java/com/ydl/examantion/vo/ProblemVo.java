@@ -46,5 +46,7 @@ public class ProblemVo implements Serializable {
 
     private Integer userId;
 
-    private Integer pageSize;
+    private Integer currentPage  = 1;
+
+    private Integer pageSize = 10;
 }

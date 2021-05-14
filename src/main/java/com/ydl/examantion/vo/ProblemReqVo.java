@@ -19,7 +19,7 @@ public class ProblemReqVo {
 
     private Integer score;
 
-    private Integer currentPage  = 1;
+    private Integer currentPage=1;
 
     private Integer pageSize = 10;
 }

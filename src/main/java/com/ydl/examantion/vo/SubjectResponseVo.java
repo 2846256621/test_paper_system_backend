@@ -22,4 +22,6 @@ public class SubjectResponseVo implements Serializable {
     private Integer blankCount;
 
     private Integer shortAnswerCount;
+
+    private Integer multipleCount;
 }

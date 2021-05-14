@@ -21,6 +21,13 @@
 
     <select id="selectUserLoginList" resultType="com.ydl.examantion.model.Users">
         select * from users
+        <where>
+            <if test="userAdminPageVo.userName != null and userAdminPageVo.userName != ''">
+                and users.user_name like concat('%', #{userAdminPageVo.userName}, '%')
+            </if>
+            and users.status = 0
+        </where>
+
     </select>
 
     <insert id="registerUser" parameterType="com.ydl.examantion.model.Users">

@@ -106,5 +106,5 @@ public class PointController {
         Page page = pointService.selectPoint(pointVo);
         return ResponseResult.page(page);
     }
-
 }
+

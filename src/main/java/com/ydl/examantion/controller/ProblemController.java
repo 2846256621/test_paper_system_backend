@@ -54,7 +54,7 @@ public class ProblemController {
      * @return
      */
     @PostMapping(value = "/addProblem")
-    public ResponseResult addPoint(@RequestBody ProblemVo problemVo) {
+    public ResponseResult addProblem(@RequestBody ProblemVo problemVo) {
         ResponseResult responseResult = validateData(problemVo);
         if (!responseResult.isSuccess()) {
             return responseResult;
@@ -104,6 +104,7 @@ public class ProblemController {
         }else {
             problemReqVo.setSubjectId(problemVo.getSubject()).setDifficultyLevel(problemVo.getDifficultyLevel()).setPointId(Joiner.on(",").join(problemVo.getKnowledgePoints())).setProblemType(problemVo.getProblemType()).setScore(problemVo.getScore()).setProblemText(problemVo.getProblemText());
         }
+        problemReqVo.setCurrentPage(problemVo.getCurrentPage()).setPageSize(problemVo.getPageSize());
         Page page = blankService.selectProblem(problemReqVo);
         return ResponseResult.page(page);
     }

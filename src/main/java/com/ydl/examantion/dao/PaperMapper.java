@@ -2,6 +2,7 @@ package com.ydl.examantion.dao;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ydl.examantion.algorithm.Paper;
 import com.ydl.examantion.model.Exam;
 import com.ydl.examantion.model.ExamQuestion;
@@ -22,7 +23,7 @@ public interface PaperMapper extends BaseMapper<Exam> {
 
     List<ExamQuestion> getByExamId(Integer id);
 
-    ArrayList<PaperListRes> selectPaperList(@Param("paperListVo")PaperListVo paperListVo);
+    ArrayList<PaperListRes> selectPaperList(@Param("paperListVo")PaperListVo paperListVo,Page page);
 
     Integer paperStatistic();
 }

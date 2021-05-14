@@ -108,7 +108,7 @@ public class UsersController {
         httpServletResponse.setDateHeader("Expires", 0);
         httpServletResponse.setContentType("image/jpeg");
 
-        httpServletResponse.setHeader("Access-Control-Allow-Credentials","true");//若要返回cookie、携带seesion等信息则将此项设置我true
+        httpServletResponse.setHeader("Access-Control-Allow-Credentials","true");//若要返回cookie、携带seesion等信息则将此项设置为true
         ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();
         responseOutputStream.write(captchaChallengeAsJpeg);
         responseOutputStream.flush();
@@ -127,6 +127,7 @@ public class UsersController {
         }
         return ResponseResult.fail("更新失败");
     }
+
 
 
 
@@ -151,6 +152,7 @@ public class UsersController {
         }
         return ResponseResult.success();
     }
+
 
 
 }

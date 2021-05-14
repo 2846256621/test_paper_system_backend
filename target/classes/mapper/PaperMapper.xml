@@ -20,7 +20,7 @@
                 and exam.subject_id = #{paperListVo.subjectId}
             </if>
             <if test="paperListVo.examName != null and paperListVo.examName != ''">
-                and exam.exam_name = #{paperListVo.examName}
+                and exam.exam_name like concat('%', #{paperListVo.examName}, '%')
             </if>
             and exam.status = 0
         </where>

@@ -16,9 +16,9 @@
 
 
     <select id="selectSubjectInfo" resultType="com.ydl.examantion.vo.SubjectResponseVo">
-        select s.id as subjectId,s.name as subjectName,s.user_id as userId ,pointCount,choiceCount,judgementCount,blankCount,shortAnswerCount
+        select s.id as subjectId,s.name as subjectName,s.user_id as userId ,pointCount,choiceCount,judgementCount,blankCount,shortAnswerCount,multipleCount
         from subject s,(select sbj.id,count(single.id) as choiceCount from subject sbj left join single as single on  sbj.id =single.subject_id and single.status = 0 group by sbj.id) choiceCounts,
-        (select sbj.id,count(point.id) as pointCount from subject sbj left join knowledge_point point on sbj.id = point.subject_id and point.status = 0 group by sbj.id) pointCounts,(select sbj.id, count(judge.id) as judgementCount from subject sbj left join judgement as judge on  sbj.id =judge.subject_id and judge.status = 0 group by sbj.id) judgementCounts,(select sbj.id,count(b.id) as blankCount from subject sbj left join blank as b on  sbj.id =b.subject_id and b.status = 0 group by sbj.id) blankCounts,(select sbj.id,count(short.id) as shortAnswerCount from subject sbj left join short_answer as short on  sbj.id =short.subject_id and short.status = 0 group by sbj.id) shortAnswerCounts
+        (select sbj.id,count(point.id) as pointCount from subject sbj left join knowledge_point point on sbj.id = point.subject_id and point.status = 0 group by sbj.id) pointCounts,(select sbj.id, count(judge.id) as judgementCount from subject sbj left join judgement as judge on  sbj.id =judge.subject_id and judge.status = 0 group by sbj.id) judgementCounts,(select sbj.id,count(b.id) as blankCount from subject sbj left join blank as b on  sbj.id =b.subject_id and b.status = 0 group by sbj.id) blankCounts,(select sbj.id,count(short.id) as shortAnswerCount from subject sbj left join short_answer as short on  sbj.id =short.subject_id and short.status = 0 group by sbj.id) shortAnswerCounts,(select sbj.id,count(multiple.id) as multipleCount from subject sbj left join multiple as multiple on sbj.id =multiple.subject_id and multiple.status = 0 group by sbj.id) multipleCounts
         <where>
             <if test="subjectVo.name != null and subjectVo.name != ''">
                 and s.name like concat('%', #{subjectVo.name}, '%')
@@ -28,6 +28,7 @@
             and judgementCounts.id = s.id
             and blankCounts.id = s.id
             and shortAnswerCounts.id = s.id
+            and multipleCounts.id = s.id
             and s.status = 0
         </where>
     </select>

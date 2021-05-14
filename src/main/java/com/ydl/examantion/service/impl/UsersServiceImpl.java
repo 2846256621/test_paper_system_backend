@@ -32,7 +32,7 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
     @Override
     public Page selectUserLoginList(UserAdminPageVo userAdminPageVo) {
         Page page = new Page(userAdminPageVo.getCurrentPage(), userAdminPageVo.getPageSize());
-        List<Users> usersList = usersMapper.selectUserLoginList(page);
+        List<Users> usersList = usersMapper.selectUserLoginList(userAdminPageVo,page);
         page.setRecords(usersList);
         return page;
     }
